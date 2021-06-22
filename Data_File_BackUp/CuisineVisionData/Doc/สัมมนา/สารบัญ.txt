@@ -1,0 +1,21 @@
+-----1 Getting Started
+-----2 Overview
+3 System Requirements
+4 Installing the .NET Framework 4.5, 4.5.1, and 4.5.2
+5 Common Type System
+6 The .NET Framework and Out-of-Band Releases
+7 Common Language Runtime (CLR)
+-----8 Class Library Overview
+-----9 Assemblies in the Common Language Runtime
+10 Application Domains
+11 Runtime Hosts
+
+
+
+ตารางที่ ๑: แสดงความต้องการทางด้านฮาร์ดแวร์ในการติดตั้ง .NET Framework 8
+ตารางที่ ๒: แสดงการสนับสนุนการทำงานของ .NET Frameworkใน Client OS ต่างๆ 8
+ตารางที่ ๓: แสดงการสนับสนุนการทำงานของ .NET Frameworkใน Server OS ต่างๆ   9
+ตารางที่ ๔: แสดงความต้องการของระบบที่ต้องการการติดตั้ง .NET Framework 10
+ตารางที่ ๕: แสดงเวอร์ชั่นของ Common Language Runtime
+เทียบกับเวอร์ชั่นของ .NET Framework			18
+

@@ -1,0 +1,792 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ProjectApp.Source.AdminForm"
+        Title="AdminForm" Height="640" Width="800" Closing="Window_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="#FFF18B10" BorderThickness="4" Loaded="Window_Loaded">
+    <Grid Margin="0,0,0,0" d:IsLocked="True" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="300*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="Black" Margin="0,-2,0,0" Stroke="Black"/>
+        <Image Margin="10,-15,0,0" Source="/ProjectApp;component/Image/CV1.png" HorizontalAlignment="Left" Width="45" />
+        <Label Content="CuisineVision" FontSize="35" Margin="69,34,468,22" FontWeight="ExtraBold" Foreground="#FFE84D12" Background="Transparent"/>
+        <TabControl HorizontalAlignment="Left" Height="470" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="766" Background="LightGray">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid x:Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="#FFF18B10" />
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Product" Height="30">
+                <TabControl  Margin="0,-5,-5,-4" Grid.Row="1">
+                    <TabItem Header="Add" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <ComboBox x:Name="cbProdAddType" Height="25" HorizontalAlignment="Left" Margin="375,77,0,266" Width="135" SelectionChanged="cbProdAddType_SelectionChanged"/>
+                            <Label Content="Product Type" HorizontalAlignment="Left" Margin="259,76,0,0" VerticalAlignment="Top" Height="26" Width="80"/>
+                            <Label Content="Product Name" HorizontalAlignment="Left" Margin="259,106,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                            <Label Content="Product Price" HorizontalAlignment="Left" Margin="259,136,0,0" VerticalAlignment="Top" Height="26" Width="80"/>
+                            <Label Content="Product Amount" HorizontalAlignment="Left" Margin="259,166,0,0" VerticalAlignment="Top" Height="26" Width="97"/>
+                            <Label Content="Image" HorizontalAlignment="Left" Margin="259,197,0,0" VerticalAlignment="Top" Height="26" Width="97"/>
+                            <Label x:Name="lbAddStatus" HorizontalAlignment="Left" Margin="187,42,0,0" VerticalAlignment="Top" Width="385" HorizontalContentAlignment="Center" Height="29"/>
+                            <TextBox x:Name="txtProdAddName" HorizontalAlignment="Left" Margin="375,106,0,236" Width="135" Height="25" MaxLength="64"/>
+                            <TextBox x:Name="txtProdAddPrice" HorizontalAlignment="Left" Margin="375,136,0,206" Width="135" Height="25"/>
+                            <TextBox x:Name="txtProdAddAmount" HorizontalAlignment="Left" Margin="375,166,0,176" Width="135" Height="25"/>
+                            <Image x:Name="imPicture" HorizontalAlignment="Left" Height="60" Margin="375,196,0,0" VerticalAlignment="Top" Width="60" Source="/ProjectApp;component/Image/NoImages.jpg"/>
+                            <Button x:Name="btnProdAdd" Content="Add" Margin="210,292,387,26" Click="btnProdAdd_Click"/>
+                            <Button x:Name="btnProdAddClear" Content="Clear" Margin="385,292,212,26" Click="btnProdAddClear_Click"/>
+                            <Button x:Name="btnUpload" Content="Browse" HorizontalAlignment="Left" Margin="375,261,0,0" VerticalAlignment="Top" Width="75" Click="btnUpload_Click"/>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="Delete" Height="40" VerticalAlignment="Top">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Product Type" HorizontalAlignment="Left" Margin="27,48,0,0" VerticalAlignment="Top" Height="25"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Margin="27,78,0,0" VerticalAlignment="Top" Height="25"/>
+                            <Label Content="**Select Row To Delete" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnProdDelSearch" Content="Search" HorizontalAlignment="Left" Margin="283,72,0,0" VerticalAlignment="Top" Height="31" Width="70" Click="btnProdDelSearch_Click"/>
+                            <ComboBox x:Name="cbProdDelTypeSearch" HorizontalAlignment="Left" Margin="120,45,0,292" Height="25" Width="135" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <TextBox x:Name="txtProdDelSearch" HorizontalAlignment="Left" Margin="120,75,0,261" Width="135" Height="25"/>
+                            <DataGrid x:Name="gridProdDel" Margin="10,109,110,0" VerticalAlignment="Top" Height="249" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridProdDel_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Product ID" Binding="{Binding ProdNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Product Name" Binding="{Binding ProdName}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding ProdType}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Price" Binding="{Binding ProdPrice}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding ProdAmount}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button x:Name="btnProdDelete" Content="Delete" Margin="637,302,0,10" Click="btnProdDelete_Click"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Edit" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Product Type" HorizontalAlignment="Left" Margin="27,38,0,0" VerticalAlignment="Top" Height="25"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top" Height="26"/>
+                            <Label Content="**Select Row To Edit" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnProdEditSearch" Content="Search" HorizontalAlignment="Left" Margin="280,64,0,0" VerticalAlignment="Top" Height="32" Width="70" Click="btnProdEditSearch_Click"/>
+                            <ComboBox x:Name="cbProdEditTypeSearch" HorizontalAlignment="Left" Margin="120,38,0,305" Height="25" Width="135" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <TextBox x:Name="txtProdEditSearch" HorizontalAlignment="Left" Margin="120,70,0,272" Width="135" Height="25"/>
+                            <DataGrid x:Name="gridProdEdit" Margin="10,109,10,0" VerticalAlignment="Top" Height="165" RowHeight="20" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridProdEdit_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Product ID" Binding="{Binding ProdNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Product Name" Binding="{Binding ProdName}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding ProdType}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Price" Binding="{Binding ProdPrice}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding ProdAmount}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Label Content="Product Type" Height="25" HorizontalAlignment="Left" Margin="10,279,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Product Name" Height="25" HorizontalAlignment="Left" Margin="10,310,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Product Price" Height="25" HorizontalAlignment="Left" Margin="270,279,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Product Amount" Height="25" HorizontalAlignment="Left" Margin="270,310,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtProdEditType" HorizontalAlignment="Left" Margin="120,279,0,64" Width="135" IsEnabled="False" Height="25"/>
+                            <TextBox x:Name="txtProdEditName" HorizontalAlignment="Left" Margin="120,310,0,33" Width="135" MaxLength="64" Height="25"/>
+                            <TextBox x:Name="txtProdEditPrice" HorizontalAlignment="Left" Margin="376,279,0,64" Width="135" Height="25"/>
+                            <TextBox x:Name="txtProdEditAmount" HorizontalAlignment="Left" Margin="376,310,0,33" Width="135" Height="25"/>
+                            <Button x:Name="btnProdEditUpdate" Content="Update" Margin="532,279,10,33" Click="btnProdEditUpdate_Click"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Employee" Height="30">
+                <TabControl Margin="0,-5,-5,-4" Grid.Row="1">
+                    <TabItem Header="Add" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <ComboBox x:Name="cbEmpAddPos" HorizontalAlignment="Left" Margin="368,-9,0,352" Width="135" Height="25"/>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="256,-6,0,0" VerticalAlignment="Top" Height="25" Width="53"/>
+                            <Label Content="Identification card" HorizontalAlignment="Left" Margin="256,24,0,0" VerticalAlignment="Top" Height="25" Width="110"/>
+                            <Label Content="Firstname" HorizontalAlignment="Left" Margin="256,52,0,0" VerticalAlignment="Top" Height="25" Width="62"/>
+                            <Label Content="Lastname" HorizontalAlignment="Left" Margin="256,82,0,0" VerticalAlignment="Top" Height="25" Width="60"/>
+                            <Label Content="Address NO." HorizontalAlignment="Left" Margin="256,112,0,0" VerticalAlignment="Top" Height="25" Width="76"/>
+                            <Label Content="Tumbol" HorizontalAlignment="Left" Margin="256,142,0,0" VerticalAlignment="Top" Height="25" Width="50"/>
+                            <Label Content="Amphoe" HorizontalAlignment="Left" Margin="256,172,0,0" VerticalAlignment="Top" Height="25" Width="55"/>
+                            <Label Content="Province" HorizontalAlignment="Left" Margin="256,202,0,0" VerticalAlignment="Top" Height="25" Width="55"/>
+                            <Label Content="Email" HorizontalAlignment="Left" Margin="256,232,0,0" VerticalAlignment="Top" Height="25" Width="38"/>
+                            <Label Content="Telephone" HorizontalAlignment="Left" Margin="256,262,0,0" VerticalAlignment="Top" Height="25" Width="66"/>
+                            <TextBox x:Name="txtEmpAddName" HorizontalAlignment="Left" Margin="368,52,0,291" Height="25" Width="135" MaxLength="32"/>
+                            <TextBox x:Name="txtEmpAddID" HorizontalAlignment="Left" Margin="369,22,0,321" Height="25" Width="135" MaxLength="32"/>
+                            <TextBox x:Name="txtEmpAddLastName" HorizontalAlignment="Left" Margin="368,82,0,261" Height="25" Width="135" MaxLength="32"/>
+                            <TextBox x:Name="txtEmpAddAddrNO" HorizontalAlignment="Left" Margin="368,112,0,231" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpAddAddrTumbol" HorizontalAlignment="Left" Margin="368,142,0,201" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpAddAddrAmphoe" HorizontalAlignment="Left" Margin="368,172,0,171" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpAddAddrProvince" HorizontalAlignment="Left" Margin="368,202,0,141" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpAddEmail" HorizontalAlignment="Left" Margin="368,232,0,111" Height="25" Width="135" MaxLength="100"/>
+                            <TextBox x:Name="txtEmpAddTel" HorizontalAlignment="Left" Margin="368,262,0,81" Height="25" Width="135" MaxLength="10"/>
+                            <Button x:Name="btnEmpAdd" Content="Add" Margin="210,300,387,18" Click="btnEmpAdd_Click"/>
+                            <Button x:Name="btnEmpAddClear" Content="Clear" Margin="385,300,212,18"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Delete" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Position" HorizontalAlignment="Left" Height="25" Margin="27,48,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Height="25" Margin="27,78,0,0" VerticalAlignment="Top"/>
+                            <Label Content="**Select Row To Delete" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnEmpDelSearch" Content="Search" HorizontalAlignment="Left" Margin="291,72,0,0" VerticalAlignment="Top" Height="31" Width="70" Click="btnEmpDelSearch_Click"/>
+                            <ComboBox x:Name="cbEmpDelPosition" HorizontalAlignment="Left" Margin="120,45,0,292" Width="135" VerticalContentAlignment="Center" Height="25">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <TextBox x:Name="txtEmpDelSearch" HorizontalAlignment="Left" Margin="120,78,0,266" Height="25" Width="135"/>
+                            <DataGrid x:Name="gridEmpDel" Margin="10,109,110,0" VerticalAlignment="Top" Height="249" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridEmpDel_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Emp ID" Binding="{Binding EmpNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Position" Binding="{Binding Position}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Lastname" Binding="{Binding Lastname}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Tel" Binding="{Binding Tel}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" Width="auto" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button x:Name="btnEmpDelete" Content="Delete" Margin="637,302,0,10" Click="btnEmpDelete_Click"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Edit" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="45,41,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Margin="315,41,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="**Select Row To Edit" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnEmpEditSearch" Content="Search" HorizontalAlignment="Left" Margin="532,35,0,0" VerticalAlignment="Top" Height="31" Width="70" RenderTransformOrigin="-0.057,0.71" Click="btnEmpEditSearch_Click"/>
+                            <TextBox x:Name="txtEmpEditSearch" HorizontalAlignment="Left" Margin="376,41,0,302" Height="25" Width="135"/>
+                            <DataGrid x:Name="gridEmpEdit" Margin="10,74,10,0" VerticalAlignment="Top" Height="131" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridEmpEdit_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Emp ID" Binding="{Binding EmpNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Position" Binding="{Binding Position}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Lastname" Binding="{Binding Lastname}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Tel" Binding="{Binding Tel}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top"/>
+                            <Label Content="First Name" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Last Name" HorizontalAlignment="Left" Margin="10,272,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Email" HorizontalAlignment="Left" Margin="10,332,0,0" Height="26" VerticalAlignment="Top"/>
+                            <Label Content="Telephone" HorizontalAlignment="Left" Margin="10,302,0,0" Height="26" VerticalAlignment="Top"/>
+                            <Label Content="Address NO." HorizontalAlignment="Left" Margin="290,242,0,0" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.242,0.962"/>
+                            <Label Content="Tumbol" HorizontalAlignment="Left" Margin="290,272,0,0" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.242,0.962"/>
+                            <Label Content="Amphoe" HorizontalAlignment="Left" Margin="290,302,0,0" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.242,0.962"/>
+                            <Label Content="Province" HorizontalAlignment="Left" Margin="290,332,0,0" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.242,0.962"/>
+                            <ComboBox x:Name="cbEmpEditPosSearch" HorizontalAlignment="Left" Margin="120,41,0,302" Height="25" Width="135" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <ComboBox x:Name="cbEmpEditPos" HorizontalAlignment="Left" Margin="120,213,0,130" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpEditName" HorizontalAlignment="Left" Margin="120,243,0,100" Height="25" Width="135" MaxLength="32" IsEnabled="False"/>
+                            <TextBox x:Name="txtEmpEditLastName" HorizontalAlignment="Left" Margin="120,273,0,70" Height="25" Width="135" MaxLength="32" IsEnabled="False"/>
+                            <TextBox x:Name="txtEmpEditTel" HorizontalAlignment="Left" Margin="120,303,0,40" Height="25" Width="135" MaxLength="10"/>
+                            <TextBox x:Name="txtEmpEditEmail" HorizontalAlignment="Left" Margin="120,333,0,10" Height="25" Width="135" MaxLength="100"/>
+                            <TextBox x:Name="txtEmpEditAddrNO" HorizontalAlignment="Left" Margin="376,243,0,100" Height="25" Width="135" MaxLength="10"/>
+                            <TextBox x:Name="txtEmpEditAddrTumbol" HorizontalAlignment="Left" Margin="376,273,0,70" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpEditAddrAmphoe" HorizontalAlignment="Left" Margin="376,303,0,40" Height="25" Width="135"/>
+                            <TextBox x:Name="txtEmpEditAddrProvince" HorizontalAlignment="Left" Margin="376,333,0,10" Height="25" Width="135"/>
+                            <!--<Button Name="btnEmpEditDefault" Content="Set Default" Margin="532,237,10,74"/>-->
+                            <Button x:Name="btnEmpEditUpdate" Content="Update" Margin="569,303,10,10" Click="btnEmpEditUpdate_Click"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Account" Height="30">
+                <TabControl Margin="0,-5,-5,-4" Grid.Row="1">
+                    <TabItem Header="Add" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <ComboBox x:Name="cbAccAddEmpNo" HorizontalAlignment="Left" Margin="364,58,0,277" Width="135"/>
+                            <Label Content="Employee NO." HorizontalAlignment="Left" Margin="236,65,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Account" HorizontalAlignment="Left" Margin="236,103,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Password" HorizontalAlignment="Left" Margin="236,141,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Re-enter Password" HorizontalAlignment="Left" Margin="236,179,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtAccount" HorizontalAlignment="Left" Margin="364,96,0,239" Width="135" MaxLength="16"/>
+                            <PasswordBox x:Name="txtAccPassword" HorizontalAlignment="Left" Margin="364,134,0,201" Width="135" MaxLength="16"/>
+                            <PasswordBox x:Name="txtAccRePassword" HorizontalAlignment="Left" Margin="364,172,0,163" Width="135" MaxLength="16"/>
+                            <Button x:Name="btnAccAdd" Content="Add" Margin="185,276,397,42" Click="btnAccAdd_Click"/>
+                            <Button x:Name="btnAccClear" Content="Clear" Margin="397,276,185,42"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Delete" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="27,48,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Margin="27,78,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="**Select Row To Delete" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnAccDelSearch" Content="Search" HorizontalAlignment="Left" Margin="280,72,0,0" VerticalAlignment="Top" Height="31" Width="70" Click="btnAccDelSearch_Click"/>
+                            <ComboBox x:Name="cbAccDelPosition" HorizontalAlignment="Left" Margin="120,48,0,294" Height="25" Width="135" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <TextBox x:Name="txtAccDelSearch" HorizontalAlignment="Left" Margin="120,78,0,264" Height="25" Width="135"/>
+                            <DataGrid x:Name="gridAccDel" Margin="10,109,110,0" VerticalAlignment="Top" Height="249" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridAccDel_SelectionChanged">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Account NO" Binding="{Binding AccNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Position" Binding="{Binding Position}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button x:Name="btnAccDelete" Content="Delete" Margin="637,302,0,10" Click="btnAccDelete_Click" />
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Edit" Height="40">
+                        <Grid Margin="9,10,10,7">
+                            <Label Content="Searching" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="27,45,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="Keyword" HorizontalAlignment="Left" Margin="27,75,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="**Select Row To Edit" HorizontalAlignment="Left" Margin="586,10,0,0" VerticalAlignment="Top" Width="136"/>
+                            <Button x:Name="btnAccEditSearch" Content="Search" HorizontalAlignment="Left" Margin="280,69,0,0" VerticalAlignment="Top" Height="31" Width="70" Click="btnAccEditSearch_Click"/>
+                            <ComboBox x:Name="cbAccEditPosition" HorizontalAlignment="Left" Margin="120,45,0,292" Height="25" Width="135" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="All" IsSelected="True"/>
+                            </ComboBox>
+                            <TextBox x:Name="txtAccEditSearch" HorizontalAlignment="Left" Margin="120,75,0,261" Width="135" Height="25"/>
+                            <DataGrid x:Name="gridAccEdit" Margin="10,109,10,0" VerticalAlignment="Top" Height="155" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionChanged="gridAccEdit_SelectionChanged" >
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#FFECBD85" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Account NO" Binding="{Binding AccNO}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Position" Binding="{Binding Position}" >
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="FontSize" Value="14"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Label Content="Position" HorizontalAlignment="Left" Margin="12,273,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="Account" HorizontalAlignment="Left" Margin="12,303,0,0" Height="25" VerticalAlignment="Top"/>
+                            <Label Content="Password" HorizontalAlignment="Left" Margin="12,333,0,0" Height="25" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtAccEditPos" HorizontalAlignment="Left" Margin="122,273,0,70" Height="25" Width="135" IsReadOnly="True" IsEnabled="False"/>
+                            <TextBox x:Name="txtAccountEdit" HorizontalAlignment="Left" Margin="122,303,0,40" Height="25" Width="135" MaxLength="16" IsEnabled="False"/>
+                            <PasswordBox x:Name="txtAccEditPassword" HorizontalAlignment="Left" Margin="122,333,0,10" Height="25" Width="135" MaxLength="16"/>
+                            <Button x:Name="btnAccEditUpdate" Content="Update" Margin="373,320,224,5" Click="btnAccEditUpdate_Click"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="ProjectApp.Source.ConfirmPayment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ConfirmPayment" Height="250" Width="400" WindowStyle="None" BorderBrush="#FFF18B10" BorderThickness="4" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True" Background="#FFC78F68">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="91*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="lbPayment" Content="ต้องการเรียกชำระเงิน?" FontSize="25" Foreground="White" Margin="32,20,31,117" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
+        <Button x:Name="btnConfirmPayment" FontSize="20" FontWeight="Bold" Content="ยืนยัน" Margin="67,10,25,10" Grid.Row="1" Foreground="#FFD86200" Click="btnConfirmPayment_Click"/>
+        <Button x:Name="btnCancel" FontSize="20" FontWeight="Bold" Content="ยกเลิก" Margin="25,10,67,10" Grid.Row="1" Grid.Column="1" Foreground="#FFD86200" Click="btnCancel_Click"/>
+        <Label x:Name="lbPaymentStatus" Content="" FontSize="20" Foreground="White" Margin="32,60,31,81" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
+    </Grid>
+</Window>

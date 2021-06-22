@@ -1,0 +1,29 @@
+﻿<Window x:Class="ProjectApp.Source.LogoutForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LogoutForm" Height="240" Width="360" WindowStyle="None" BorderBrush="#FFF18B10" BorderThickness="4" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="131*"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="98*"/>
+            <ColumnDefinition Width="39*"/>
+        </Grid.ColumnDefinitions>
+        <Image Margin="4,27,64,20" Width="60" Height="60" Grid.Row="1" Source="/ProjectApp;component/Image/CV1.png" Grid.Column="1"/>
+        <Label Content="Account   :" Margin="71,23,24,51" Grid.Row="1" FontWeight="SemiBold" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label Content="Password :" Margin="71,51,24,23" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="SemiBold" Grid.Column="1"/>
+        <Label x:Name="lbLogout" Content="" Margin="7,0,25,71" Grid.Row="1" Grid.ColumnSpan="4" Foreground="Red" FontWeight="SemiBold" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Enter employee account to logout." Margin="31,27,32,6" Grid.ColumnSpan="5" FontWeight="SemiBold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnLogout" Content="Logout" Margin="46,5,10,18" Grid.Row="2" Grid.Column="1" Click="btnLogout_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" Margin="10,5,52,18" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Click="btnCancel_Click"/>
+        <TextBox x:Name="txtEmpAcc" Grid.Column="2" Margin="17,28,0,56" Grid.Row="1" TextWrapping="Wrap" Grid.ColumnSpan="2" Height="23" MaxLength="16"/>
+        <PasswordBox x:Name="txtEmpPass" Grid.Column="2" Margin="17,54,0,30" Grid.Row="1" Width="120" Height="23" Grid.ColumnSpan="2" MaxLength="16"/>
+
+    </Grid>
+</Window>

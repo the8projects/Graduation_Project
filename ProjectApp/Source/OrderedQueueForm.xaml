@@ -1,0 +1,37 @@
+﻿<Window x:Class="ProjectApp.Source.OrderedQueueForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OrderedQueueForm" Height="300" Width="489" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closed="Window_Closed">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="309*"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="28*"/>
+
+            <RowDefinition Height="101*"/>
+            <RowDefinition Height="22*"/>
+            <RowDefinition Height="92*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Button Name="btnLogOut" Content="Log out" Margin="13,5" FontWeight="ExtraBold" FontSize="20" Click="btnLogOut_Click"/>
+        <Viewbox Margin="107,3,66,3" Grid.Column="1">
+            <ContentControl Content ="ร้าน___________" RenderTransformOrigin="0.688,0.688"/>
+        </Viewbox>
+        <Viewbox Margin="133,8,93,9" Grid.Column="1" Grid.Row="1">
+            <ContentControl Content ="ลำดับการสั่งอาหาร" FontWeight="Medium" Height="16" Width="84" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+        </Viewbox>
+        <DataGrid Margin="10" Grid.Row="2" Grid.ColumnSpan="3"/>
+        <Viewbox Margin="113,5,74,6" Grid.Column="1" Grid.Row="3">
+            <ContentControl Content ="รายการอาหารที่ดำเนินการแล้ว" FontWeight="Medium" Height="16" Width="137" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+        </Viewbox>
+        <DataGrid Margin="10,10,10,1" Grid.Row="4" Grid.ColumnSpan="3"/>
+        <Button Content="BACK" Grid.Column="2" Margin="0,3" Padding="0" FontSize="20"/>
+        <Image Margin="39,2,16,2" Grid.Row="5" Source="/ProjectApp;component/Image/CV1.png"/>
+        <ContentControl Content ="Powered By : " FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1,0,22,1" Grid.Row="5" FontSize="14"/>
+
+    </Grid>
+</Window>

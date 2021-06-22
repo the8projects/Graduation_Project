@@ -1,0 +1,298 @@
+﻿<Window x:Class="ProjectApp.Source.EmployeeForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EmployeeForm" Height="640" Width="800" Closing="Window_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="#FFF18B10" BorderThickness="4" Loaded="Window_Loaded">
+    <Grid Margin="0,0,0,0" HorizontalAlignment="Right" Width="786" Background="#FFB9B9B9">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition Width="63*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="240*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="172*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="Black" Margin="0,-2,0,0" Stroke="Black" Height="102" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label Content="CuisineVision" FontSize="35" Margin="77,37,271,0" FontWeight="ExtraBold" Foreground="#FFE84D12" Background="Transparent"/>
+        <Image Margin="27,10,0,11" Source="/ProjectApp;component/Image/CV1.png" HorizontalAlignment="Left" Width="45" />
+        <Viewbox Margin="235,0,194,3" Grid.Row="3">
+            <ContentControl Content ="ลูกค้าเรียกชำระเงิน"  FontWeight="Bold" Foreground="Black" Width="112"/>
+        </Viewbox>
+        <Viewbox Margin="309,15,120,10" Grid.Row="1">
+            <ContentControl Content ="รายการที่ลูกค้าสั่งซื้อ"  FontWeight="Bold" Foreground="Black" Width="110"/>
+        </Viewbox>
+        <Viewbox x:Name="vbPurchase" Margin="3,73,10,10" Stretch="Uniform" Grid.Row="4" MouseLeftButtonUp="vbProduct_MouseLeftButtonUp" Grid.Column="1" >
+            <Canvas x:Name="button2" Width="129" Height="53" Cursor="Hand" Grid.Column="2" Margin="0,0,0,0">
+                <Rectangle x:Name="basecoat" RadiusX="4" RadiusY="4" Width="129" Height="53" Fill="Black" />
+                <Rectangle x:Name="glow2" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0">
+                    <Rectangle.Fill>
+                        <RadialGradientBrush Center="0.5,0.974" GradientOrigin="0.5,0.974" RadiusY="0.865" RadiusX="0.538">
+                            <GradientStop Color="#FFFF5D00" />
+                            <GradientStop Offset="1" />
+                            <GradientStop Color="#FFFF7C30" />
+                        </RadialGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle x:Name="glass" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0.8">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.496,0.102" StartPoint="0.496,0.907">
+                            <GradientStop Color="#00000000" Offset="0" />
+                            <GradientStop Color="White" Offset="1" />
+                            <GradientStop Color="#98989898" Offset="0.599" />
+                            <GradientStop Color="#98989898" Offset="0.6" />
+                            <GradientStop Color="#87878787" Offset="0.569" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Label Content="จัดการรายการอาหาร" Name="lbProduct"  Foreground="White" FontWeight="Bold" IsHitTestVisible="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontStyle="Normal" BorderThickness="0" Height="53" Width="129" Padding="0" Canvas.Left="0" Canvas.Top="0" FontSize="14"/>
+            </Canvas>
+        </Viewbox>
+        <DataGrid x:Name="gridOrdered" Margin="27,7,10,0" VerticalAlignment="Top" Height="221" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" Grid.Row="2" Grid.ColumnSpan="2" SelectionChanged="gridOrdered_SelectionChanged">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FFECBD85" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Table" Binding="{Binding Path=Tables}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Path=Name}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Detail" Binding="{Binding Path=Detail}" Width="auto" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Viewbox Margin="10,18,10,6" Stretch="Uniform" Grid.Column="2" Grid.Row="4" MouseLeftButtonUp="btnOrdered_Click" >
+                                <Canvas x:Name="button1" Width="129" Height="53" Cursor="Hand" Grid.Column="2" Margin="0,0,0,0">
+                                    <Rectangle x:Name="basecoat2" RadiusX="4" RadiusY="4" Width="129" Height="53" Fill="Black" />
+                                    <Rectangle x:Name="glow" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush Center="0.5,0.974" GradientOrigin="0.5,0.974" RadiusY="0.865" RadiusX="0.538">
+                                                <GradientStop Color="#FFFF5D00" />
+                                                <GradientStop Offset="1" />
+                                                <GradientStop Color="#FFFF7C30" />
+                                            </RadialGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="glass2" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0.8">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="0.496,0.102" StartPoint="0.496,0.907">
+                                                <GradientStop Color="#00000000" Offset="0" />
+                                                <GradientStop Color="White" Offset="1" />
+                                                <GradientStop Color="#98989898" Offset="0.599" />
+                                                <GradientStop Color="#98989898" Offset="0.6" />
+                                                <GradientStop Color="#87878787" Offset="0.569" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Label Content="Order" Name="lbOrder"  Foreground="White" FontWeight="Bold" IsHitTestVisible="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontStyle="Normal" BorderThickness="0" Height="53" Width="129" Padding="0" Canvas.Left="0" Canvas.Top="0" FontSize="16"/>
+                                </Canvas>
+                            </Viewbox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="gridPayment" Margin="27,2,22,0" VerticalAlignment="Top" Height="155" RowHeight="30" ColumnWidth="*" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" HeadersVisibility="Column" Grid.Row="4" SelectionChanged="gridPayment_SelectionChanged">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FFECBD85" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="RecNO" Binding="{Binding Path=RecNO}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Table" Binding="{Binding Path=Tables}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Viewbox Margin="10,18,10,6" Stretch="Uniform" Grid.Column="2" Grid.Row="4" MouseLeftButtonUp="btnProduct_Click" >
+                                <Canvas x:Name="button1" Width="129" Height="53" Cursor="Hand" Grid.Column="2" Margin="0,0,0,0">
+                                    <Rectangle x:Name="basecoat2" RadiusX="4" RadiusY="4" Width="129" Height="53" Fill="Black" />
+                                    <Rectangle x:Name="glow" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush Center="0.5,0.974" GradientOrigin="0.5,0.974" RadiusY="0.865" RadiusX="0.538">
+                                                <GradientStop Color="#FFFF5D00" />
+                                                <GradientStop Offset="1" />
+                                                <GradientStop Color="#FFFF7C30" />
+                                            </RadialGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle x:Name="glass2" RadiusX="4" RadiusY="4" Width="129" Height="53" Opacity="0.8">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="0.496,0.102" StartPoint="0.496,0.907">
+                                                <GradientStop Color="#00000000" Offset="0" />
+                                                <GradientStop Color="White" Offset="1" />
+                                                <GradientStop Color="#98989898" Offset="0.599" />
+                                                <GradientStop Color="#98989898" Offset="0.6" />
+                                                <GradientStop Color="#87878787" Offset="0.569" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Label Content="Order" Name="lbOrder"  Foreground="White" FontWeight="Bold" IsHitTestVisible="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontStyle="Normal" BorderThickness="0" Height="53" Width="129" Padding="0" Canvas.Left="0" Canvas.Top="0" FontSize="16"/>
+                                </Canvas>
+                            </Viewbox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
